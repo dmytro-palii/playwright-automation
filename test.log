@@ -1,0 +1,9 @@
+INFO     root:conftest.py:19 setup preconditions state
+DEBUG    asyncio:proactor_events.py:634 Using proactor: IocpProactor
+ERROR    root:application.py:28 page: http://127.0.0.1:8000/demo/, console error: Hi! I'm the ERROR. Try to catch me
+ERROR    root:application.py:28 page: http://127.0.0.1:8000/demo/, console error: Hi! I'm the ERROR. Try to catch me
+ERROR    root:application.py:28 page: http://127.0.0.1:8000/demo/, console error: Hi! I'm the ERROR. Try to catch me
+WARNING  root:application.py:31 page: http://127.0.0.1:8000/demo/, dialog text: You have to press Ctrl button
+ERROR    root:application.py:28 page: http://127.0.0.1:8000/demo/, console error: this is injected error
+WARNING  root:application.py:31 page: http://127.0.0.1:8000/demo/, dialog text: this is injected alert
+INFO     root:conftest.py:21 setup post condition state

@@ -1,0 +1,15 @@
+plawright==1.49.1
+pytest==8.3.4
+
+
+# Documentation:
+#
+# playwright==1.49.1:
+#   - Specifies the version of Playwright required for the project.
+#   - Playwright is used for browser automation and end-to-end testing.
+#   - Ensure compatibility with the codebase by using the specified version.
+#
+# pytest==8.3.4:
+#   - Specifies the version of pytest required for running tests.
+#   - Pytest is a testing framework for writing and executing test cases.
+#   - The specified version ensures consistent behavior and compatibility with the tests.
