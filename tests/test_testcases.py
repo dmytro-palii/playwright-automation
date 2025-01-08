@@ -47,3 +47,7 @@ def test_new_test_cases(desktop_app_auth, name, description):
 def test_testcases_does_not_exist(desktop_app_auth):
     desktop_app_auth.navigate_to('Test Cases')
     assert not desktop_app_auth.test_cases.check_test_exists('auhfahgh')
+
+
+def test_git():
+    assert True
