@@ -75,20 +75,20 @@ To run tests with specific markers (if defined, e.g., `@pytest.mark.smoke`):
 
 ## Project Structure
 
-[BASH_COMMAND_START]
+```plaintext
 CommonProject/
-├── conftest.py               # Pytest fixtures (e.g., desktop_app_auth) and hooks
-├── page_object/              # Page Object Model classes
-│   ├── application.py        # Main application class, browser/context setup, common actions
-│   ├── demo_pages.py         # Page objects for demo functionalities
-│   └── test_cases.py         # Page objects for test case management
-├── test/                     # Test files
-│   ├── test_testcases.py     # Tests for test case creation, deletion
-│   ├── test_demo.py          # Tests for demo page interactions
-│   └── test.log              # Log file for test execution details
-├── requirements.txt          # Project dependencies
-└── README.md                 # This file
-[BASH_COMMAND_END]
+┣━━ conftest.py               # Pytest fixtures (e.g., desktop_app_auth) and hooks
+┣━━ page_object/              # Page Object Model classes
+┃   ┣━━ application.py        # Main application class, browser/context setup, common actions
+┃   ┣━━ demo_pages.py         # Page objects for demo functionalities
+┃   ┗━━ test_cases.py         # Page objects for test case management
+┣━━ test/                     # Test files
+┃   ┣━━ test_testcases.py     # Tests for test case creation, deletion
+┃   ┣━━ test_demo.py          # Tests for demo page interactions
+┃   ┗━━ test.log              # Log file for test execution details
+┣━━ requirements.txt          # Project dependencies
+┗━━ README.md                 # This file
+```
 
 ## Key Features & Examples
 
