@@ -3,9 +3,12 @@ import logging
 import os
 from pytest import fixture
 from playwright.sync_api import sync_playwright
+from pytest_base_url.plugin import base_url
+from helpers.web_servises import WebService
 from page_object.application import App
 import settings
 import pytest
+from helpers.db import DataBase
 
 
 @fixture(autouse=True, scope='session')
@@ -13,6 +16,25 @@ def preconditions():
     logging.info('preconditions started')
     yield
     logging.info('postconditions started')
+
+
+@fixture(scope='function')
+def get_webservice(request):
+    base_url = request.config.getoption('--base-url') or "http://127.0.0.1:8000"
+    secure = request.config.getoption('--secure')
+    config = load_config(secure)
+    web = WebService(base_url)
+    web.login(**config)
+    yield web
+    web.close()
+
+
+@fixture(scope='session')
+def get_db(request):
+    path = request.config.getini("db_path")
+    db = DataBase(path)
+    yield db
+    db.close()
 
 
 @fixture(scope='session')
@@ -98,6 +120,7 @@ def pytest_addoption(parser):
     parser.addoption('--secure', action='store', default='secure.json')
     parser.addoption('--my-browser', action='store', default='chromium')
     parser.addoption('--advice', action='store', default='')
+    parser.addini('db_path', help='path to sqlite db file', default='D:\\AutotestLearn\\Playwright\\CommonProject\\TestMe-TCM\\db.sqlite3')
     parser.addini('headless', help='run browser in headless mode', default='True')
 
 
