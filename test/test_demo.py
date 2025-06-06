@@ -1,3 +1,7 @@
+import allure
+
+
+@allure.title('test wait more 30 sec')
 def test_wait_more_30sec(desktop_app_auth):
     desktop_app_auth.navigation_to('Demo pages')
     desktop_app_auth.demo_pages.open_page_after_wait(3)

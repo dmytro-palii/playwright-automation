@@ -35,7 +35,6 @@ def test_delete_test_case(desktop_app_auth, get_webservice):
     get_webservice.create_test(test_name, 'delete me please')
     desktop_app_auth.navigation_to('Test Cases')
     assert desktop_app_auth.test_cases.check_test_exists(test_name)
-
     desktop_app_auth.test_cases.delete_test_by_name(test_name)
     desktop_app_auth.navigation_to('Test Cases')
     assert not desktop_app_auth.test_cases.check_test_exists(test_name)

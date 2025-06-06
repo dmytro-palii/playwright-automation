@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="2" time="5.028" timestamp="2025-06-04T21:27:58.305257-05:00" hostname="DmytroPalii"><testcase classname="test.test_dashboard" name="test_dashboard_data[chromium]" time="2.677" /><testcase classname="test.test_dashboard" name="test_multiple_roles[chromium]" time="2.316"><failure message="AssertionError: assert (0 + 1) == 0&#10; +  where 0 = int('0')&#10; +  and   0 = int('0')">desktop_app_auth = &lt;page_object.application.App object at 0x0000023958BBD1C0&gt;
+desktop_app_bob = &lt;page_object.application.App object at 0x0000023958F7B440&gt;
+get_db = &lt;helpers.db.DataBase object at 0x0000023958FD22A0&gt;
+
+    def test_multiple_roles(desktop_app_auth, desktop_app_bob, get_db):
+        alice = desktop_app_auth
+        bob = desktop_app_bob
+        before = alice.get_total_tests_stats()
+        bob.navigation_to('Create new test')
+        bob.create_test('test by bob', 'bob')
+        alice.refresh_dashboard()
+        after = alice.get_total_tests_stats()
+        get_db.delete_test_cases('test by bob')
+&gt;       assert int(before) + 1 == int(after)
+E       AssertionError: assert (0 + 1) == 0
+E        +  where 0 = int('0')
+E        +  and   0 = int('0')
+
+test_dashboard.py:23: AssertionError</failure></testcase></testsuite></testsuites>

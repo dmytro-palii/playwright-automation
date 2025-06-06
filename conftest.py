@@ -1,7 +1,7 @@
 import json
 import logging
 import os
-from pytest import fixture
+from pytest import fixture, hookimpl
 from playwright.sync_api import sync_playwright
 from pytest_base_url.plugin import base_url
 from helpers.web_servises import WebService
@@ -9,6 +9,7 @@ from page_object.application import App
 import settings
 import pytest
 from helpers.db import DataBase
+import allure
 
 
 @fixture(autouse=True, scope='session')
@@ -24,7 +25,7 @@ def get_webservice(request):
     secure = request.config.getoption('--secure')
     config = load_config(secure)
     web = WebService(base_url)
-    web.login(**config)
+    web.login(**config['users']['userRole1'])
     yield web
     web.close()
 
@@ -86,8 +87,19 @@ def desktop_app_auth(desktop_app, request):
     secure = request.config.getoption('--secure')
     config = load_config(secure)
     desktop_app.goto('/login')
-    desktop_app.login(**config)
+    desktop_app.login(**config['users']['userRole1'])
     yield desktop_app
+
+
+@fixture(scope='session')
+def desktop_app_bob(get_browser, request):
+    secure = request.config.getoption('--secure')
+    config = load_config(secure)
+    app = App(get_browser, settings.BASE_URL, **settings.BROWSER_OPTIONS)
+    app.goto('/login')
+    app.login(**config['users']['userRole2'])
+    yield app
+    app.close()
 
 
 @fixture(scope='session', params=['iPhone 11', 'Pixel 2'])
@@ -112,14 +124,32 @@ def mobile_app_auth(mobile_app, request):
     secure = request.config.getoption('--secure')
     config = load_config(secure)
     mobile_app.goto('/login')
-    mobile_app.login(**config)
+    mobile_app.login(**config['users']['userRole1'])
     yield mobile_app
+
+
+@hookimpl(tryfirst=True, hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    outcome = yield
+    result = outcome.get_result()
+    setattr(item, f'result_{result.when}', result)
+
+
+@fixture(scope='function', autouse=True)
+def make_screenshots(request):
+    yield
+    if request.node.result_call.failed:
+        for arg in request.node.funcargs.values():
+            if isinstance(arg, App):
+                allure.attach(body=arg.page.screenshot(),
+                              name='screenshot',
+                              attachment_type=allure.attachment_type.PNG)
 
 
 def pytest_addoption(parser):
     parser.addoption('--secure', action='store', default='secure.json')
-    parser.addoption('--my-browser', action='store', default='chromium')
-    parser.addoption('--advice', action='store', default='')
+    # parser.addoption('--my-browser', action='store', default='chromium')
+    # parser.addoption('--advice', action='store', default='')
     parser.addini('db_path', help='path to sqlite db file', default='D:\\AutotestLearn\\Playwright\\CommonProject\\TestMe-TCM\\db.sqlite3')
     parser.addini('headless', help='run browser in headless mode', default='True')
 
