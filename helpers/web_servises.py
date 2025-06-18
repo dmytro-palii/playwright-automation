@@ -26,6 +26,8 @@ class WebService:
             'password': password
         }
         self.session.post(self.base_url + '/login/', data=data)
+        csrftoken = self.session.cookies.get('csrftoken')
+        self.session.headers.update({'X-CSRFToken': csrftoken})
 
 
     def create_test(self, test_name: str, test_description: str):
@@ -36,6 +38,10 @@ class WebService:
             'description': test_description
         }
         self.session.post(self.base_url + '/test/new', data=data)
+
+
+    def report_test(self, test_id: int, status: str):
+        self.session.post(self.base_url + f'/test/{test_id}/status', json={'status': status})
 
 
     def close(self):

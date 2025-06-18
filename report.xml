@@ -1,30 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="14" time="18.991" timestamp="2025-06-04T22:18:33.607788-05:00" hostname="DmytroPalii"><testcase classname="test.test_dashboard" name="test_dashboard_data[chromium]" time="2.441" /><testcase classname="test.test_dashboard" name="test_multiple_roles[chromium]" time="2.104"><failure message="AssertionError: assert (0 + 1) == 0&#10; +  where 0 = int('0')&#10; +  and   0 = int('0')">desktop_app_auth = &lt;page_object.application.App object at 0x0000022ED0CA7FB0&gt;, desktop_app_bob = &lt;page_object.application.App object at 0x0000022ED10E5E20&gt;
-get_db = &lt;helpers.db.DataBase object at 0x0000022ED10F6090&gt;
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="4" time="1.086" timestamp="2025-06-05T21:24:54.640150-05:00" hostname="DmytroPalii"><testcase classname="test.test_marks" name="test_1" time="0.020" /><testcase classname="test.test_marks" name="test_2" time="0.002" /><testcase classname="test.test_marks" name="test_3" time="0.002"><failure message="assert False">@mark.smoke
+    def test_3():
+&gt;       assert False
+E       assert False
 
-    def test_multiple_roles(desktop_app_auth, desktop_app_bob, get_db):
-        alice = desktop_app_auth
-        bob = desktop_app_bob
-        alice.refresh_dashboard()
-        before = alice.get_total_tests_stats()
-        bob.navigation_to('Create new test')
-        bob.create_test('test by bob', 'bob')
-        alice.refresh_dashboard()
-        after = alice.get_total_tests_stats()
-        get_db.delete_test_cases('test by bob')
-&gt;       assert int(before) + 1 == int(after)
-E       AssertionError: assert (0 + 1) == 0
-E        +  where 0 = int('0')
-E        +  and   0 = int('0')
+test\test_marks.py:16: AssertionError</failure></testcase><testcase classname="test.test_marks" name="test_4" time="0.796"><failure message="assert False">@mark.smoke
+    def test_4():
+&gt;       assert False
+E       assert False
 
-test\test_dashboard.py:24: AssertionError</failure></testcase><testcase classname="test.test_demo" name="test_wait_more_30sec[chromium]" time="3.495" /><testcase classname="test.test_demo" name="test_wait_ajax[chromium]" time="3.106"><failure message="assert 2 == 6&#10; +  where 2 = get_ajax_responses_count()&#10; +    where get_ajax_responses_count = &lt;page_object.demo_pages.DemoPages object at 0x0000022ED0E030B0&gt;.get_ajax_responses_count&#10; +      where &lt;page_object.demo_pages.DemoPages object at 0x0000022ED0E030B0&gt; = &lt;page_object.application.App object at 0x0000022ED0CA7FB0&gt;.demo_pages">desktop_app_auth = &lt;page_object.application.App object at 0x0000022ED0CA7FB0&gt;
-
-    def test_wait_ajax(desktop_app_auth):
-        desktop_app_auth.navigation_to('Demo pages')
-        desktop_app_auth.demo_pages.open_page_and_wait_ajax(2)
-&gt;       assert desktop_app_auth.demo_pages.get_ajax_responses_count() == 6
-E       assert 2 == 6
-E        +  where 2 = get_ajax_responses_count()
-E        +    where get_ajax_responses_count = &lt;page_object.demo_pages.DemoPages object at 0x0000022ED0E030B0&gt;.get_ajax_responses_count
-E        +      where &lt;page_object.demo_pages.DemoPages object at 0x0000022ED0E030B0&gt; = &lt;page_object.application.App object at 0x0000022ED0CA7FB0&gt;.demo_pages
-
-test\test_demo.py:14: AssertionError</failure></testcase><testcase classname="test.test_demo" name="test_handlers[chromium]" time="0.426" /><testcase classname="test.test_location" name="test_location_ok[iPhone 11-chromium]" time="1.463" /><testcase classname="test.test_mobile" name="test_columns_hidden[iPhone 11-chromium]" time="0.182" /><testcase classname="test.test_location" name="test_location_ok[Pixel 2-chromium]" time="1.496" /><testcase classname="test.test_mobile" name="test_columns_hidden[Pixel 2-chromium]" time="0.179" /><testcase classname="test.test_testcases" name="test_new_testcase[chromium-general test]" time="0.512" /><testcase classname="test.test_testcases" name="test_new_testcase[chromium-empty description]" time="0.464" /><testcase classname="test.test_testcases" name="test_new_testcase[chromium-digits name]" time="0.661" /><testcase classname="test.test_testcases" name="test_cases_does_not_exist[chromium]" time="0.214" /><testcase classname="test.test_testcases" name="test_delete_test_case[chromium]" time="2.089" /></testsuite></testsuites>
+test\test_marks.py:21: AssertionError</failure></testcase></testsuite></testsuites>

@@ -13,10 +13,23 @@ import allure
 
 
 @fixture(autouse=True, scope='session')
-def preconditions():
+def preconditions(request):
     logging.info('preconditions started')
+    # base_url = request.config.getoption('--base-url')
+    base_url = request.config.getoption('--base-url') or settings.BASE_URL
+    secure = request.config.getoption('--secure')
+    config = load_config(secure)
     yield
     logging.info('postconditions started')
+    web = WebService(base_url)
+    web.login(**config['users']['userRole3'])
+    for test in request.node.items:
+        if len(test.own_markers) > 0:
+            if test.own_markers[0].name == 'test_id':
+                if test.result_call.passed:
+                    web.report_test(test.own_markers[0].args[0], 'PASS')
+                if test.result_call.failed:
+                    web.report_test(test.own_markers[0].args[0], 'FAIL')
 
 
 @fixture(scope='function')
@@ -148,8 +161,6 @@ def make_screenshots(request):
 
 def pytest_addoption(parser):
     parser.addoption('--secure', action='store', default='secure.json')
-    # parser.addoption('--my-browser', action='store', default='chromium')
-    # parser.addoption('--advice', action='store', default='')
     parser.addini('db_path', help='path to sqlite db file', default='D:\\AutotestLearn\\Playwright\\CommonProject\\TestMe-TCM\\db.sqlite3')
     parser.addini('headless', help='run browser in headless mode', default='True')
 

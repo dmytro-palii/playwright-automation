@@ -10,8 +10,9 @@ def test_wait_more_30sec(desktop_app_auth):
 
 def test_wait_ajax(desktop_app_auth):
     desktop_app_auth.navigation_to('Demo pages')
-    desktop_app_auth.demo_pages.open_page_and_wait_ajax(2)
-    assert desktop_app_auth.demo_pages.get_ajax_responses_count() == 6
+    wait_time = 6
+    desktop_app_auth.demo_pages.open_page_and_wait_ajax(wait_time)
+    assert desktop_app_auth.demo_pages.get_ajax_responses_count() == wait_time
 
 
 def test_handlers(desktop_app_auth):
